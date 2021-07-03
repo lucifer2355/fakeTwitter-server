@@ -3,6 +3,8 @@ const gql = require("graphql-tag");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
+const Post = require("./model/Post");
+
 dotenv.config({ path: "./config.env" });
 
 const DB = process.env.DATABASE.replace(
@@ -11,14 +13,28 @@ const DB = process.env.DATABASE.replace(
 );
 
 const typeDefs = gql`
+  type Post {
+    id: ID!
+    body: String!
+    createAt: String!
+    username: String!
+  }
+
   type Query {
-    sayHi: String!
+    getPosts: [Post]
   }
 `;
 
 const resolvers = {
   Query: {
-    sayHi: () => "Hello Word",
+    async getPosts() {
+      try {
+        const posts = await Post.find();
+        return posts;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
 };
 
