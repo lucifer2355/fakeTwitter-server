@@ -31,7 +31,7 @@ module.exports = {
 
       const token = jwt.sign(
         {
-          id: res._id,
+          id: res.id,
           email: res.email,
           username: res.username,
         },
@@ -40,7 +40,7 @@ module.exports = {
       );
 
       return {
-        ...res.doc,
+        ...res._doc,
         id: res._id,
         token,
       };
