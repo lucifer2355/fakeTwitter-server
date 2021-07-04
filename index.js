@@ -1,9 +1,9 @@
 const { ApolloServer } = require("apollo-server");
-const gql = require("graphql-tag");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
-const Post = require("./model/Post");
+const typeDefs = require("./graphql/typeDefs");
+const resolvers = require("./graphql/resolvers");
 
 dotenv.config({ path: "./config.env" });
 
@@ -11,32 +11,6 @@ const DB = process.env.DATABASE.replace(
   "<password>",
   process.env.DATABASE_PASSWORD
 );
-
-const typeDefs = gql`
-  type Post {
-    id: ID!
-    body: String!
-    createAt: String!
-    username: String!
-  }
-
-  type Query {
-    getPosts: [Post]
-  }
-`;
-
-const resolvers = {
-  Query: {
-    async getPosts() {
-      try {
-        const posts = await Post.find();
-        return posts;
-      } catch (error) {
-        throw new Error(error);
-      }
-    },
-  },
-};
 
 const server = new ApolloServer({
   typeDefs,
