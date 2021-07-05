@@ -15,6 +15,7 @@ const DB = process.env.DATABASE.replace(
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => ({ req }),
 });
 
 mongoose
