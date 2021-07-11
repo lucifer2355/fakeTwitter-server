@@ -25,7 +25,7 @@ mongoose
     useFindAndModify: true,
     useUnifiedTopology: true,
   })
-  .then(() => server.listen({ port: process.env.port || 5000 }))
+  .then(() => server.listen({ port: process.env.PORT || 5000 }))
   .then((res) => {
     console.log(`Server running at ${res.url}`);
   })
